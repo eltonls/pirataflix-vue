@@ -1,4 +1,4 @@
-   export default interface ItemInterface {
-         label?: string,
-         route?: string
-    }
+export default interface ItemInterface {
+      label?: string,
+      route?: string
+ }

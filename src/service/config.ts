@@ -9,6 +9,7 @@ function apiConfig(baseUrl: string, token?: string): AxiosRequestConfig {
 
   config.headers!.Authorization = token ? `Bearer ${token}` : `Bearer ${import.meta.env.VITE_BEARER_TOKEN}`;
 
+
   return config
 }
 
