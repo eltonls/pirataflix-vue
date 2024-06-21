@@ -7,6 +7,10 @@ import './style.css'
 import App from './App.vue'
 import router from './routes'
 
+
+
+
+
 createApp(App)
     .use(PrimeVue, {
         theme: {
@@ -23,3 +27,5 @@ createApp(App)
     .component("Button", Button)
     .component("Card", Card)
     .mount('#app')
+
+

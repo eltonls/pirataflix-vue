@@ -2,13 +2,16 @@
   <div class="bg-greybackground">
     <div class="flex items-center justify-center p-12">
       <div class="grid grid-cols-4 gap-8">
-        <Card v-for="x in 8" :key="x" unstyled> 
+        <Card v-for="card in data" :key="card.id" unstyled> 
           <template #content>
-            <img
-              :src="imageUrl"
+             <RouterLink :to="`/${card.media_type}/${card.id}`"> 
+            <img v-if="card.poster_path"
+              :src="'https://image.tmdb.org/t/p/w500'+card.poster_path"
               alt="Imagem"
               class="h-[20vw] h-fit hover:opacity-50 hover:bg-[#303153] rounded-lg hover:p-4 ease-in-out duration-300 shadow-lg cursor-pointer"
             />
+            <div v-else class="h-[20vw] flex text-white font-bold items-center hover:opacity-50 hover:bg-[#303153] rounded-lg "> Imagem não encontrada</div>
+           </RouterLink> 
           </template>
         </Card>
       </div>
@@ -18,17 +21,44 @@
 </template>
 
 <script lang="ts">
-import Card from 'primevue/card';
+import DetailsModel from '../../models/details.model';
+import { HomeView } from '../../models/homeView.model';
+import { HomeService } from './home.service';
+
 export default {
-  components: {
-    Card,
-  },
-  data() {
+
+  data():HomeView{
     return{
-      imageUrl: 'https://image.tmdb.org/t/p/original//vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg',
+      data:{} as DetailsModel
 
     }
   },
+  methods:{
+    getAllData(){     
+      this.homeService.allMoviesPopular.pipe().subscribe({next:(response) =>
+       this.data=response.results   
+        })
+        
+      this.homeService.getAllMoviesPopular()
+
+    },
+    // getMovieById(id:number){
+    //   this.homeService.movieById.pipe().subscribe({next:(response:any)=>console.log(response)
+    //   })
+    //     this.homeService.getMovieById(id)
+  
+    // },
+
+
+  },
+  computed:{
+    homeService(){
+      return new HomeService()
+    }
+  },
+  mounted(){
+    this.getAllData()
+  }
 }
 
 </script>
