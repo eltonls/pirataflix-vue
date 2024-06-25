@@ -15,7 +15,6 @@
     </div>
   </div>
 
-  <!-- OLHAR NA DOCUMENTAAÇÃO CERTA -->
 </template>
 
 <script lang="ts">
