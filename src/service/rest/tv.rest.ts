@@ -1,7 +1,7 @@
 import api from "../rxjs";
 
 export class TvRest {
-  getAllPopularShows() {
+  getPopularTvShows() {
     return api.get("/tv/popular");
   }
 }
