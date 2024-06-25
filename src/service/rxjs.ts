@@ -7,7 +7,7 @@ const get = <T>(
   params?: object,
   baseURL?: string,
   responseType: ResponseType = "json",
-  token?: any // Change it later??
+  token?: string // Change it later??
 ): Observable<T> => {
   return defer(() => {
     return api(baseURL, token).get<T>(url, { params, responseType });
@@ -18,9 +18,10 @@ const post = <T>(
   url: string,
   body: object,
   params?: object,
-  baseURL?: string
+  baseURL?: string,
+  token?: string
 ): Observable<T | void> => {
-  return defer(() => api(baseURL).post<T>(url, body, { params })).pipe(
+  return defer(() => api(baseURL, token).post<T>(url, body, { params })).pipe(
     map((result) => result.data)
   );
 };
@@ -29,9 +30,10 @@ const put = <T>(
   url: string,
   body: object,
   params?: object,
-  baseURL?: string
+  baseURL?: string,
+  token?: string
 ): Observable<T | void> => {
-  return defer(() => api(baseURL).put<T>(url, body, { params })).pipe(
+  return defer(() => api(baseURL, token).put<T>(url, body, { params })).pipe(
     map((result) => result.data)
   );
 };
@@ -46,9 +48,10 @@ const patch = <T>(
   url: string,
   body: object,
   params?: object,
-  baseURL?: string
+  baseURL?: string,
+  token?: string
 ): Observable<T | void> => {
-  return defer(() => api(baseURL).patch<T>(url, body, { params })).pipe(
+  return defer(() => api(baseURL, token).patch<T>(url, body, { params })).pipe(
     map((result) => result.data)
   );
 };
