@@ -22,12 +22,11 @@
 
 <script lang="ts">
 import DetailsModel from '../../models/details.model';
-import { HomeView } from '../../models/homeView.model';
 import { HomeService } from './home.service';
 
 export default {
 
-  data():HomeView{
+  data(){
     return{
       data:{} as DetailsModel
 

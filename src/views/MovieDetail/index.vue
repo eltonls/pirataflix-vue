@@ -1,21 +1,20 @@
 <script lang="ts">
 //import { useRoute } from "vue-router";
 import DetailsModel from "../../models/details.model";
-import { ViewDetails } from "../../models/detailsView.model";
 import { DetailService } from "./detail.service";
 
 export default {
-  
+  ///75nSb1fbWooipwcSU5bUttiOriI.jpg
   props: {
     movie: {},
   },
-  data():ViewDetails {
+  data() {
     return {
       
       data:{} as DetailsModel ,
       id: Number(this.$route.params.id),
       mediaType: String(this.$route.params.media_type),
-      prefixUrlImage: 'https://image.tmdb.org/t/p/w500',
+      prefixUrlImage: 'https://image.tmdb.org/t/p/w1280',
           };
   },
   methods: {
@@ -32,10 +31,11 @@ export default {
     detailService() {
       return new DetailService();
     },
-    backgroundImage(){
-      if(this.data.backdrop_path)
-      return  this.prefixUrlImage+this.data.backdrop_path
-    },
+    backgroundImage(){     
+      const url =  this.prefixUrlImage+this.data.backdrop_path
+ 
+      return url   
+      },
 
 
   },
@@ -47,14 +47,17 @@ export default {
 </script>
 
 <template>
-  <section  :class="`bg-center bg-no-repeat  bg-cover bg-[url('${backgroundImage}')]`">
+  <section  class="h-fit z-10 absolute" >
+     <section class="  z-index-0"> 
+      <img :src="`${backgroundImage}`" alt="" class=" no-repeat bg-cover bg-center w-screen blur z-0 cover">
     <div
-      class=" bg-opacity-80 h-screen flex items-center p-10 "
+      class=" bg-opacity-80 top-96 z-30  absolute flex items-center p-10"
     >
-      <Card class="lg:w-1/3" style="background: rgba(0, 0, 0, 0.4)" >
+      <Card class="lg:w-1/3  " style="background: rgba(0, 0, 0, 0.6)" >
         <template #title >
           <h3 class="text-2xl text-white font-bold tracking-wider mb-1">
             {{ data.original_title }}
+            
           </h3>
         </template>
         <template #content>
@@ -91,5 +94,7 @@ export default {
         </template>
       </Card>
     </div>
+   </section> 
   </section>
 </template>
+
