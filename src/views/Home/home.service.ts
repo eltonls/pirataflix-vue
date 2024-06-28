@@ -1,3 +1,4 @@
+import QueryParams from "../../models/QueryParams";
 import { MoviesRest } from "../../service/rest/movie.rest";
 import { BehaviorSubject, Observable } from "rxjs"
 
@@ -8,8 +9,12 @@ export class HomeService{
     allMoviesPopular:Observable<any> = this.allMoviesPopular$.asObservable()
 
 
-    getAllMoviesPopular():void {     
-      this._movieRest.getAllDataPopular().pipe().subscribe({
+
+
+    getAllMoviesPopular(params: QueryParams):void {     
+      this._movieRest.getAllDataPopular(params).pipe().subscribe({
+
+
 
         next:(response)=>         
           this.allMoviesPopular$.next(response)
