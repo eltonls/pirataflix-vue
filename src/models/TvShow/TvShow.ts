@@ -48,7 +48,8 @@ export class TvShow {
     public number_of_seasons?: number,
     public origin_country?: string[],
     public seasons?: Season[],
-    public type?: string
+    public type?: string,
+    public media_type?: string
     
 
   ) {}

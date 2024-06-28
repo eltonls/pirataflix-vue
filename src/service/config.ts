@@ -1,5 +1,9 @@
 // Axios Config
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
+//import { Verify } from "../utils/toasts";
+import { Toasts } from "../utils/toasts";
+import app from "../main";
+import { useToast } from "primevue/usetoast";
 
 function apiConfig(baseUrl: string, token?: string): AxiosRequestConfig {
   const config: AxiosRequestConfig = {
@@ -14,19 +18,28 @@ function apiConfig(baseUrl: string, token?: string): AxiosRequestConfig {
 }
 
 function initAxios(config: AxiosRequestConfig): AxiosInstance {
-
+ // const verify = new Verify()
+ //const toast =  useToast()
+ const showToast = new Toasts()
+  
   const defineInstance = axios.create(config);
   defineInstance.interceptors.request.use(
     (request: AxiosRequestConfig): any => {
       return request;
     },
-    (error) => Promise.reject(error)
+    (error) => {
+
+      return Promise.reject(error)}
   );
 
   defineInstance.interceptors.response.use(
     (response) => response,
     (error: AxiosError) => {
-      alert(error);
+      app.config.globalProperties.$toast.add(showToast.error() as any)
+      
+      
+      
+      
       return Promise.reject(error);
     }
   );

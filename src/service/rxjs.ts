@@ -9,9 +9,9 @@ const get = <T>(
   responseType: ResponseType = "json",
   token?: string // Change it later??
 ): Observable<T> => {
-  return defer(() => {
+  return defer(() => { 
     return api(baseURL, token).get<T>(url, { params, responseType });
-  }).pipe(map((result) => result.data));
+  }).pipe(map((result) =>   result.data));
 };
 
 const post = <T>(

@@ -13,11 +13,15 @@ export class HomeService{
 
     getAllMoviesPopular(params: QueryParams):void {     
       this._movieRest.getAllDataPopular(params).pipe().subscribe({
+        next:(response:any)=>   {
 
+         return this.allMoviesPopular$.next(response)
+          // if(!response.sucess){
+          //   console.log("error");
+            
+          // }
+        }
 
-
-        next:(response)=>         
-          this.allMoviesPopular$.next(response)
         
       })
     }

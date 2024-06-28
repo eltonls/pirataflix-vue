@@ -1,7 +1,12 @@
 <script lang="ts">
 import { DetailService } from "./detail.service";
 import { TvShow } from "../../models/TvShow/TvShow";
+
+
 import LocalStorage from "../../utils/localStorage.util";
+
+import { useShowError } from "../../utils/toasts";
+
 
 export default {
   props: {
@@ -18,9 +23,26 @@ export default {
   },
   methods: {
     getDataById() {
+    // const { showErrorAuth,showErrorConnect } = useShowError();
       this.detailService.dataById
         .pipe()
-        .subscribe({ next: (response) => (this.data = response) });
+        .subscribe({ next: (response) => {
+          this.data = response
+          console.log(response);
+          
+          // if (response.success) {
+          //   showErrorAuth();
+          //   console.log("sucesso");
+            
+          // }
+          // if (response.length === 1) {          
+          //   showErrorConnect();
+          //   console.log("length");
+          //   console.log(response.length);
+            
+            
+          // }
+        } });
       this.detailService.getDataById(this.id, this.mediaType);
     },
     addFavorite(favorite: TvShow) {
@@ -131,6 +153,7 @@ export default {
           </div>
         </template>
       </Card>
+      <Toast position="top-center" class="z-50" />
     </div>
   </section>
 </template>

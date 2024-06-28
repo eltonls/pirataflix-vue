@@ -5,7 +5,7 @@
     <Navbar/>
 
     <RouterView/> 
-
+    
   </div> 
 </template>
 
