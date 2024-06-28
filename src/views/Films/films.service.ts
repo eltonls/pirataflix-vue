@@ -12,7 +12,6 @@ export class FilmService{
     getAllMovies():void{
       this._movieRest.getAllMovies().pipe().subscribe({
         next:(response)=>{
-           // console.log(response);
             
           this.allMovies$.next(response)
         }      })

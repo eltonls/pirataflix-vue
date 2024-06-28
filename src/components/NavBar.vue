@@ -4,6 +4,7 @@
     <Menubar
       :model="items"
       class="!rounded-none !border-0 h-16   !bg-darkgrey z-10 top-0 w-full fixed"
+
     >
       <template #start>
         <RouterLink :to="'/'">
@@ -24,23 +25,30 @@
         </RouterLink>
       </template>
       <template #end>
-        <i 
-          class="pi pi-heart-fill text-red-600 h-8 w-8 right-4 flex right-0 top-0"
-          style="font-size: 22px"
-        ></i>
+        <RouterLink to="/favorites">
+
+          <i 
+            class="pi pi-heart-fill text-red-600 h-8 w-8 right-4 flex right-0 top-0"
+            style="font-size: 22px"
+          ></i>
+        </RouterLink>
       </template>
     </Menubar>
   </div>
 </template>
 
 <script lang="ts">
+
+import { RouterLink } from "vue-router";
 import ItemInterface from "../interfaces/ItemInterface";
 
 
 export default {
+
   components:{
 
   },
+
   computed: {
     currentRoute() {
       return this.$route.fullPath;

@@ -1,5 +1,6 @@
 import { MoviesRest } from "../../service/rest/movie.rest";
 import { BehaviorSubject, Observable } from "rxjs"
+
 import { TvShow } from "../../models/TvShow/TvShow";
 
 
@@ -7,7 +8,6 @@ export class DetailService{
     constructor(private _movieRest = new MoviesRest ){}
 
     private dataById$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
-
 
 
     dataById:Observable<any> = this.dataById$.asObservable()
@@ -18,6 +18,7 @@ export class DetailService{
 
         next:(response)=>{
           this.dataById$.next(response as TvShow)
+
 
 
         }
