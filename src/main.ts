@@ -7,7 +7,7 @@ import router from './routes'
 import { modulesComponent } from './modules/components.module'
 import { modulesPrimeVueComponent } from './modules/primevue.module'
 import { modulesPrimeIcons } from './modules/primeicons.module'
-
+import ToastService from 'primevue/toastservice';
 
 
 const app = createApp(App)
@@ -30,6 +30,9 @@ app.use(PrimeVue, {
     })
 
  app.use(router)
+ app.use(ToastService)
  
  
  app.mount('#app')
+
+export default app

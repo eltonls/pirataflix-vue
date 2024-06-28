@@ -3,9 +3,8 @@
   <div class="bg-greybackground"> 
 
     <Navbar/>
-
     <RouterView/> 
-
+    
   </div> 
 </template>
 

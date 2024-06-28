@@ -1,10 +1,11 @@
 <template>
-  <DataView :value="tvShows.results" :rows="tvShows.results?.length"  class="pt-16"
+    <Toast position="top-center" class="z-50" />
+  <DataView v-if="tvShows.results" :value="tvShows.results" :rows="tvShows.results?.length" 
     :first="getFirstItemIndexActualPage()" :totalRecords="getTotalRecords()" @page="onPageChange"
     responsive-layout="scroll" :lazy="true">
     <template #list="tvShows">
-      <div class="flex flex-col">
-        <div class="bg-greybackground">
+      <div class="flex flex-col ">
+        <div class="bg-greybackground pt-20">
           <div class="flex items-center justify-center p-5 md:p-12">
             <div class="grid md:grid-cols-4 md:gap-8 gap-4 grid-cols-2">
               <Card v-for="show in tvShows.items" :key="show.id" unstyled>
@@ -21,7 +22,8 @@
       </div>
     </template>
   </DataView>
-  <div class="flex justify-center">
+  <div v-else class="bg-greybackground h-screen text-white flex justify-center  "> <h1 class="mt-32 flex text-9xl font-bold pt-60"> . . .</h1></div>
+  <div v-if="tvShows.results" class="flex justify-center">
     <Paginator :rows="tvShows.results?.length" :value="tvShows.results" :totalRecords="getTotalRecords()"
       @page="onPageChange" :first="getFirstItemIndexActualPage()" class="mt-15 text-white w-full lg:w-1/3 " />
   </div>

@@ -22,7 +22,10 @@ export default {
     getDataById() {
       this.detailService.dataById
         .pipe()
-        .subscribe({ next: (response) => (this.data = response) });
+        .subscribe({ next: (response) => {
+          this.data = response
+
+        } });
       this.detailService.getDataById(this.id, this.mediaType);
     },
     getTrailerVideo(media: TvShow) {
@@ -132,14 +135,18 @@ export default {
         </template>
         <template #footer>
           <div class="flex gap-4">
+
+            <a :href="urlVideo" target="_blank">
+              <Button
+        
+                label="Trailer"
+                icon="pi pi-play"
+                severity="primary"
+                class="text-white bg-red-600 border-none hover:scale-105 transition-all"
+              />
+            </a>
             <Button
-              label="Trailer"
-              icon="pi pi-play"
-              severity="primary"
-              class="text-white bg-red-600 border-none hover:scale-105 transition-all"
-              @click="getTrailerVideo(data)"
-            />
-            <Button
+            
               label="Salvar"
               icon="pi pi-heart"
               severity="contrast"
@@ -151,6 +158,10 @@ export default {
       </Card>
       <iframe :src="trailerUrl" frameborder="0" width="600" height="400" class="absolute top-5 right-5 rounded" v-if="trailerData" />
       <div v-else>Video</div>
+
+      <Toast position="top-center" class="z-50" />
+
     </div>
   </section>
+
 </template>
