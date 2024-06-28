@@ -4,6 +4,7 @@
     <Menubar
       :model="items"
       class="!rounded-none !border-0 h-16   !bg-darkgrey z-10 top-0 w-full fixed"
+
     >
       <template #start>
         <RouterLink :to="'/'">
@@ -34,13 +35,16 @@
 </template>
 
 <script lang="ts">
+
 import ItemInterface from "../interfaces/ItemInterface";
 
 
 export default {
+
   components:{
 
   },
+
   computed: {
     currentRoute() {
       return this.$route.fullPath;
