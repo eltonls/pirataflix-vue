@@ -1,7 +1,7 @@
 <template>
   <div class="bg-greybackground pt-20">
-    <div class="flex flex-col items-center justify-center p-12">
-      <div class="grid grid-cols-4 gap-8">
+    <div class="flex flex-col items-center justify-center p-5 md:p-12">
+      <div class="grid md:grid-cols-4 md:gap-8 gap-4 grid-cols-2">
         <Card v-for="card in data" :key="card.id" unstyled> 
           <template #content>
              <RouterLink :to="`/${card.media_type}/${card.id}`"> 
@@ -19,7 +19,7 @@
       </div>
 
 
-      <Paginator :rows="dataPerPage" :value="data" :totalRecords="getTotalRecords()" @page="onPaginate" :first="getFirstItemIndex()" class="mt-16 text-white"/>
+      <Paginator :rows="dataPerPage" :value="data" :totalRecords="getTotalRecords()" @page="onPaginate" :first="getFirstItemIndex()" class="mt-15 text-white"/>
 
     </div>
   </div>
