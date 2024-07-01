@@ -1,15 +1,16 @@
 import { BehaviorSubject, Observable } from "rxjs";
 import { TvRest } from "../../service/rest/tv.rest";
 import { TvShow } from "../../models/TvShow/TvShow";
+import QueryParams from "../../models/QueryParams";
 
 export class TvShowService {
   constructor(private _tvShowRest = new TvRest()) {}
-  private tvShows$: BehaviorSubject<Array<TvShow>> = new BehaviorSubject<Array<TvShow>>(Array<TvShow>());
+  private tvShows$: BehaviorSubject<any> = new BehaviorSubject<any>({});
 
   tvShows: Observable<Array<TvShow>> = this.tvShows$.asObservable();
-  getPopularTvShows(): void {
+  getPopularTvShows(params: QueryParams): void {
     this._tvShowRest
-      .getPopularTvShows()
+      .getPopularTvShows(params)
       .pipe()
       .subscribe({
         next: (response) => {

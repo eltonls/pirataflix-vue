@@ -1,7 +1,8 @@
+import QueryParams from "../../models/QueryParams";
 import api from "../rxjs";
 
 export class TvRest {
-  getPopularTvShows() {
-    return api.get("/tv/popular");
+  getPopularTvShows(params: QueryParams) {
+    return api.get("/tv/popular", params);
   }
 }
