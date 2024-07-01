@@ -1,14 +1,17 @@
 <template>
-  <div class="bg-greybackground">
+  <div class="bg-greybackground mt-20">
     <div class="flex items-center justify-center p-12">
       <div class="grid grid-cols-4 gap-8">
         <Card v-for="show in tvShows" :key="show.id" unstyled>
           <template #content>
-            <img
+            <RouterLink :to="`/tv/${show.id}`">    
+            <img v-if="show"
               :src="'https://image.tmdb.org/t/p/w500'+show.poster_path"
               alt="Imagem"
               class="h-[20vw] h-fit hover:opacity-50 hover:bg-[#303153] rounded-lg hover:p-4 ease-in-out duration-300 shadow-lg cursor-pointer"
             />
+            <div v-else class="h-[20vw] flex text-white font-bold items-center hover:opacity-50 hover:bg-[#303153] rounded-lg "> Imagem não encontrada</div>
+          </RouterLink>
           </template>
         </Card>
       </div>
@@ -17,13 +20,11 @@
 </template>
 
 <script lang="ts">
-import Card from 'primevue/card';
+
 import { TvShowService } from './series.service';
 
 export default {
-  components: {
-    Card,
-  },
+
   data(): any {
     return{
       tvShows: []

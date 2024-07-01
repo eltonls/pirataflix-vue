@@ -1,14 +1,21 @@
 import { createApp } from 'vue'
 import PrimeVue from "primevue/config"
-import Card from "primevue/card"
 import Aura from '@primevue/themes/aura'
-import Button from 'primevue/button'
 import './style.css'
 import App from './App.vue'
 import router from './routes'
+import { modulesComponent } from './modules/components.module'
+import { modulesPrimeVueComponent } from './modules/primevue.module'
+import { modulesPrimeIcons } from './modules/primeicons.module'
 
-createApp(App)
-    .use(PrimeVue, {
+
+const app = createApp(App)
+
+modulesComponent(app)
+modulesPrimeVueComponent(app)
+modulesPrimeIcons()
+
+app.use(PrimeVue, {
         theme: {
             preset: Aura,
             options: {
@@ -19,7 +26,8 @@ createApp(App)
             }
         }
     })
-    .use(router)
-    .component("Button", Button)
-    .component("Card", Card)
-    .mount('#app')
+ app.use(router)
+ 
+ 
+ app.mount('#app')
+

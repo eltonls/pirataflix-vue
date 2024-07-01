@@ -1,45 +1,116 @@
-<script>
-  export default {
-    props: {
-       movie: {}
-    }
-  }
+<script lang="ts">
+
+import { useRoute } from "vue-router";
+import { DetailService } from "./detail.service";
+import { TvShow } from "../../models/TvShow/TvShow";
+
+export default {
+  props: {
+    movie: {},
+  },
+  data() {
+    return {
+      data: {} as TvShow,
+      id: Number(this.$route.params.id),
+      mediaType: String(this.$route.params.media_type),
+      prefixUrlImage: "https://image.tmdb.org/t/p/w1280",
+    };
+
+  },
+  methods: {
+    getDataById() {
+      this.detailService.dataById
+        .pipe()
+        .subscribe({ next: (response) => (this.data = response) });
+      this.detailService.getDataById(this.id, this.mediaType);
+    },
+  },
+  computed: {
+    detailService() {
+      return new DetailService();
+    },
+
+
+    backgroundImage() {
+      return this.prefixUrlImage + this.data.backdrop_path;
+    },
+
+    urlVideo() {
+      if (this.data.original_title) {
+        const url = String(this.data.original_title)
+        
+        const urlVideo = url.replace(/ /g, "+");
+        return "https://www.youtube.com/results?search_query=" + urlVideo;
+      } else {
+        const url = String(this.data.original_name);
+        const urlVideo = url.replace(/ /g, "+");
+        return "https://www.youtube.com/results?search_query=" + urlVideo;
+      }
+    },
+  },
+  mounted() {
+    this.getDataById();
+  },
+};
 </script>
 
 <template>
-  <section
-    :class="bg-[url(`${movie.backdrop_path}`)] bg-center bg-no-repeat bg-cover"
-  >
-    <div
-      class="bg-black bg-opacity-80 w-screen h-screen flex items-center p-10"
-    >
-      <Card class="lg:w-1/3" style="background: rgba(0,0,0, .4);">
-        <template #title class="">
-          <h3 class="text-2xl text-white font-bold tracking-wider mb-1">
-            {{ movie.title }}
+  <section class="relative h-screen">
+    <img
+      :src="`${backgroundImage}`"
+      alt=""
+      class="absolute top-0 left-0 w-full h-full object-cover z-0"
+    />
+    <div class="bg-opacity-80 flex top-72 z-30 absolute  items-center p-10">
+      <Card class="lg:w-1/3  overflow-y-auto" style="background: rgba(0, 0, 0, 0.6)">
+        <template #title>
+          <h3
+            v-if="data.original_title"
+            class="text-2xl text-white font-bold tracking-wider mb-1"
+          >
+            {{ data.original_title }}
+            
+          </h3>
+          <h3 v-else class="text-2xl text-white font-bold tracking-wider mb-1">
+            {{ data.original_name }}
           </h3>
         </template>
         <template #content>
           <div class="flex flex-row text-gray-400 gap-2 mb-3">
-            <p class="" id="ano">{{ movie.release_date }}</p>
+            <p v-if="data.release_date" id="ano">{{ data.release_date }}</p>
+            <p v-else> {{ data.first_air_date }}</p>
             <p class="text-green-400 brightness-120">
-              {{ movie.vote_count }}
+              {{ data.vote_count }}
             </p>
             <p class="">|</p>
-            <p class="" id="screenTime">{{ movie.runtime }} Min</p>
+            <p v-if="data.runtime" id="screenTime">{{ data.runtime }} Min</p>
+            <p v-else> {{ data.number_of_seasons }} Seasons</p>
           </div>
           <div class="text-white mb-2">
-            <h4 class="font-bold">{{ movie.tagline }}</h4>
-            <p class="">
-              {{ movie.overview }}
+            <h4 class="font-bold">{{ data.tagline }}</h4>
+            <p v-if="data.overview" class="max-h-40 overflow-y-auto">
+              {{ data.overview }}
             </p>
+            <p v-else class="w-[80vw]">  </p>
           </div>
         </template>
         <template #footer>
-            <div class="flex gap-4">
-                <Button label="Trailer" icon="pi pi-play" severity="primary" class="text-white bg-red-600 border-none hover:scale-105 transition-all"/>
-                <Button label="Salvar" icon="pi pi-heart" severity="contrast" class="border-none hover:scale-105 transition-all"/>
-            </div> 
+          <div class="flex gap-4">
+            <a :href="urlVideo">
+              <Button
+                label="Trailer"
+                icon="pi pi-play"
+                severity="primary"
+                class="text-white bg-red-600 border-none hover:scale-105 transition-all"
+              />
+            </a>
+            <Button
+              label="Salvar"
+              icon="pi pi-heart"
+              severity="contrast"
+              class="border-none hover:scale-105 transition-all"
+            />
+          </div>
         </template>
       </Card>
     </div>
