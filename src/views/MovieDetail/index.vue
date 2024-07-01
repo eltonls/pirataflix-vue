@@ -96,7 +96,7 @@ export default {
         </template>
         <template #footer>
           <div class="flex gap-4">
-            <a :href="urlVideo">
+            <a :href="urlVideo" target="_blank">
               <Button
                 label="Trailer"
                 icon="pi pi-play"

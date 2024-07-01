@@ -9,6 +9,7 @@ import { modulesPrimeVueComponent } from './modules/primevue.module'
 import { modulesPrimeIcons } from './modules/primeicons.module'
 
 
+
 const app = createApp(App)
 
 modulesComponent(app)
@@ -16,6 +17,7 @@ modulesPrimeVueComponent(app)
 modulesPrimeIcons()
 
 app.use(PrimeVue, {
+
         theme: {
             preset: Aura,
             options: {
@@ -26,8 +28,10 @@ app.use(PrimeVue, {
             }
         }
     })
+
  app.use(router)
  
  
  app.mount('#app')
+
 

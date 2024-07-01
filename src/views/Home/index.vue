@@ -1,11 +1,10 @@
 <template>
-  <div class="bg-greybackground mt-20">
+  <div class="bg-greybackground pt-20">
     <div class="flex items-center justify-center p-12">
       <div class="grid grid-cols-4 gap-8">
         <Card v-for="card in data" :key="card.id" unstyled> 
           <template #content>
              <RouterLink :to="`/${card.media_type}/${card.id}`"> 
-
             <img v-if="card.poster_path"
               :src="'https://image.tmdb.org/t/p/w500'+card.poster_path"
               alt="Imagem"
@@ -26,6 +25,7 @@
 <script lang="ts">
 
 import { TvShow } from '../../models/TvShow/TvShow';
+
 import { HomeService } from './home.service';
 
 export default {
@@ -33,6 +33,7 @@ export default {
   data(){
     return{
       data:{} as TvShow
+
 
 
     }
