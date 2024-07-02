@@ -1,3 +1,4 @@
+import QueryParams from "../../models/QueryParams";
 import { MoviesRest } from "../../service/rest/movie.rest";
 import { BehaviorSubject, Observable } from "rxjs"
 
@@ -9,8 +10,8 @@ export class FilmService{
     allMovies:Observable<any> = this.allMovies$.asObservable()
 
 
-    getAllMovies():void{
-      this._movieRest.getAllMovies().pipe().subscribe({
+    getAllMovies(params:QueryParams):void{
+      this._movieRest.getAllMovies(params).pipe().subscribe({
         next:(response)=>{
             
           this.allMovies$.next(response)
