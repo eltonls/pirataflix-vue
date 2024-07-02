@@ -1,6 +1,4 @@
 <script lang="ts">
-
-import { useRoute } from "vue-router";
 import { DetailService } from "./detail.service";
 import { TvShow } from "../../models/TvShow/TvShow";
 
