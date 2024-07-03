@@ -1,6 +1,7 @@
 <script lang="ts">
 import { DetailService } from "./detail.service";
 import { TvShow } from "../../models/TvShow/TvShow";
+import LocalStorage from "../../utils/localStorage.util";
 
 export default {
   props: {
@@ -22,6 +23,24 @@ export default {
         .subscribe({ next: (response) => (this.data = response) });
       this.detailService.getDataById(this.id, this.mediaType);
     },
+    addFavorite(favorite: TvShow) {
+      const localStorageUtil = new LocalStorage<Array<TvShow>>();
+
+      let items = localStorageUtil.getItem("favorites") || []
+
+      items = items.filter((item: TvShow) => item.id !== favorite.id);
+
+      console.log(items)
+
+      localStorageUtil.setItem("favorites", [...items, favorite])
+    },
+    checkMediaType(media: TvShow) {
+      if(media.number_of_seasons) {
+        return "tv"
+      }
+
+      return "movie"
+    }
   },
   computed: {
     detailService() {
@@ -107,6 +126,7 @@ export default {
               icon="pi pi-heart"
               severity="contrast"
               class="border-none hover:scale-105 transition-all"
+              @click="addFavorite(data)"
             />
           </div>
         </template>
