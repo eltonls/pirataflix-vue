@@ -14,7 +14,6 @@ export default {
       mediaType: String(this.$route.params.media_type),
       prefixUrlImage: "https://image.tmdb.org/t/p/w1280",
     };
-
   },
   methods: {
     getDataById() {
@@ -26,27 +25,24 @@ export default {
     addFavorite(favorite: TvShow) {
       const localStorageUtil = new LocalStorage<Array<TvShow>>();
 
-      let items = localStorageUtil.getItem("favorites") || []
+      let items = localStorageUtil.getItem("favorites") || [];
 
       items = items.filter((item: TvShow) => item.id !== favorite.id);
 
-      console.log(items)
-
-      localStorageUtil.setItem("favorites", [...items, favorite])
+      localStorageUtil.setItem("favorites", [...items, favorite]);
     },
     checkMediaType(media: TvShow) {
-      if(media.number_of_seasons) {
-        return "tv"
+      if (media.number_of_seasons) {
+        return "tv";
       }
 
-      return "movie"
-    }
+      return "movie";
+    },
   },
   computed: {
     detailService() {
       return new DetailService();
     },
-
 
     backgroundImage() {
       return this.prefixUrlImage + this.data.backdrop_path;
@@ -54,8 +50,8 @@ export default {
 
     urlVideo() {
       if (this.data.original_title) {
-        const url = String(this.data.original_title)
-        
+        const url = String(this.data.original_title);
+
         const urlVideo = url.replace(/ /g, "+");
         return "https://www.youtube.com/results?search_query=" + urlVideo;
       } else {
@@ -78,15 +74,17 @@ export default {
       alt=""
       class="absolute top-0 left-0 w-full h-full object-cover z-0"
     />
-    <div class="bg-opacity-80 flex top-72 z-30 absolute  items-center p-10">
-      <Card class="lg:w-1/3  overflow-y-auto" style="background: rgba(0, 0, 0, 0.6)">
+    <div class="bg-opacity-80 flex top-72 z-30 absolute items-center p-10">
+      <Card
+        class="lg:w-1/3 overflow-y-auto"
+        style="background: rgba(0, 0, 0, 0.6)"
+      >
         <template #title>
           <h3
             v-if="data.original_title"
             class="text-2xl text-white font-bold tracking-wider mb-1"
           >
             {{ data.original_title }}
-            
           </h3>
           <h3 v-else class="text-2xl text-white font-bold tracking-wider mb-1">
             {{ data.original_name }}
@@ -95,20 +93,20 @@ export default {
         <template #content>
           <div class="flex flex-row text-gray-400 gap-2 mb-3">
             <p v-if="data.release_date" id="ano">{{ data.release_date }}</p>
-            <p v-else> {{ data.first_air_date }}</p>
+            <p v-else>{{ data.first_air_date }}</p>
             <p class="text-green-400 brightness-120">
               {{ data.vote_count }}
             </p>
             <p class="">|</p>
             <p v-if="data.runtime" id="screenTime">{{ data.runtime }} Min</p>
-            <p v-else> {{ data.number_of_seasons }} Seasons</p>
+            <p v-else>{{ data.number_of_seasons }} Seasons</p>
           </div>
           <div class="text-white mb-2">
             <h4 class="font-bold">{{ data.tagline }}</h4>
             <p v-if="data.overview" class="max-h-40 overflow-y-auto">
               {{ data.overview }}
             </p>
-            <p v-else class="w-[80vw]">  </p>
+            <p v-else class="w-[80vw]"></p>
           </div>
         </template>
         <template #footer>
