@@ -21,12 +21,15 @@
           </template>
         </Card>
       </div>
+    </div>
+
+    <div class="flex justify-center">
       <Paginator
         :rows="dataPerPage"
         :totalRecords="getTotalRecords()"
         @page="onPaginate"
         :first="getFirstItemIndex()"
-        class="mt-16 text-white"
+        class="mt-15 mb-5 text-white w-full lg:w-1/3"
       />
     </div>
   </div>
