@@ -1,7 +1,13 @@
 <template>
-  <DataView :value="tvShows.results" :rows="tvShows.results?.length" 
-    :first="getFirstItemIndexActualPage()" :totalRecords="getTotalRecords()" @page="onPageChange"
-    responsive-layout="scroll" :lazy="true">
+  <DataView
+    :value="tvShows.results"
+    :rows="tvShows.results?.length"
+    :first="getFirstItemIndexActualPage()"
+    :totalRecords="getTotalRecords()"
+    @page="onPageChange"
+    responsive-layout="scroll"
+    :lazy="true"
+  >
     <template #list="tvShows">
       <div class="flex flex-col">
         <div class="bg-greybackground">
@@ -10,8 +16,13 @@
               <Card v-for="show in tvShows.items" :key="show.id" unstyled>
                 <template #content>
                   <RouterLink :to="`/tv/${show.id}`">
-                    <img :src="'https://image.tmdb.org/t/p/w500' + show.poster_path" :alt="show.name"
-                      class="h-[20vw] h-fit hover:opacity-50 hover:bg-[#303153] rounded-lg hover:p-4 ease-in-out duration-300 shadow-lg cursor-pointer" />
+                    <img
+                      :src="
+                        'https://image.tmdb.org/t/p/w500' + show.poster_path
+                      "
+                      :alt="show.name"
+                      class="h-[20vw] h-fit hover:opacity-50 hover:bg-[#303153] rounded-lg hover:p-4 ease-in-out duration-300 shadow-lg cursor-pointer"
+                    />
                   </RouterLink>
                 </template>
               </Card>
@@ -22,8 +33,14 @@
     </template>
   </DataView>
   <div class="flex justify-center">
-    <Paginator :rows="tvShows.results?.length" :value="tvShows.results" :totalRecords="getTotalRecords()"
-      @page="onPageChange" :first="getFirstItemIndexActualPage()" class="mt-15 text-white w-full lg:w-1/3 " />
+    <Paginator
+      :rows="tvShows.results?.length"
+      :value="tvShows.results"
+      :totalRecords="getTotalRecords()"
+      @page="onPageChange"
+      :first="getFirstItemIndexActualPage()"
+      class="mt-15 mb-5 text-white w-full lg:w-1/3"
+    />
   </div>
 </template>
 
@@ -53,7 +70,7 @@ export default {
   },
   mounted() {
     if (this.$route.query.page) {
-      this.query.page = Number(this.$route.query.page)
+      this.query.page = Number(this.$route.query.page);
     }
     this.getTvShows(this.query);
   },
@@ -65,10 +82,10 @@ export default {
         },
       });
 
-      this.service.getPopularTvShows(query)
+      this.service.getPopularTvShows(query);
     },
     onPageChange(event: PageState) {
-      this.query.page = event.page + 1
+      this.query.page = event.page + 1;
       if (this.query) {
         this.$router.push({ name: "series", query: { ...this.query } });
       }
@@ -84,7 +101,7 @@ export default {
       }
     },
   },
-  updated() { },
+  updated() {},
   computed: {
     service() {
       return new TvShowService();
