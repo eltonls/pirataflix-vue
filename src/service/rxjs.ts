@@ -4,8 +4,8 @@ import { defer, map, Observable } from "rxjs";
 
 const get = <T>(
   url: string,
+  baseURL: string,
   params?: object,
-  baseURL?: string,
   responseType: ResponseType = "json",
   token?: string // Change it later??
 ): Observable<T> => {
@@ -17,8 +17,8 @@ const get = <T>(
 const post = <T>(
   url: string,
   body: object,
+  baseURL: string,
   params?: object,
-  baseURL?: string,
   token?: string
 ): Observable<T | void> => {
   return defer(() => api(baseURL, token).post<T>(url, body, { params })).pipe(
@@ -28,9 +28,9 @@ const post = <T>(
 
 const put = <T>(
   url: string,
+  baseURL: string,
   body: object,
   params?: object,
-  baseURL?: string,
   token?: string
 ): Observable<T | void> => {
   return defer(() => api(baseURL, token).put<T>(url, body, { params })).pipe(
@@ -38,7 +38,7 @@ const put = <T>(
   );
 };
 
-const deleteR = <T>(url: string, baseURL?: string): Observable<T | void> => {
+const deleteR = <T>(url: string, baseURL: string): Observable<T | void> => {
   return defer(() => api(baseURL).delete(`${url}`)).pipe(
     map((result) => result.data)
   );
@@ -46,9 +46,9 @@ const deleteR = <T>(url: string, baseURL?: string): Observable<T | void> => {
 
 const patch = <T>(
   url: string,
+  baseURL: string,
   body: object,
   params?: object,
-  baseURL?: string,
   token?: string
 ): Observable<T | void> => {
   return defer(() => api(baseURL, token).patch<T>(url, body, { params })).pipe(

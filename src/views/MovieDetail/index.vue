@@ -2,6 +2,7 @@
 import { DetailService } from "./detail.service";
 import { TvShow } from "../../models/TvShow/TvShow";
 import LocalStorage from "../../utils/localStorage.util";
+import TrailerResponse from "../../models/trailerResponse";
 
 export default {
   props: {
@@ -13,6 +14,7 @@ export default {
       id: Number(this.$route.params.id),
       mediaType: String(this.$route.params.media_type),
       prefixUrlImage: "https://image.tmdb.org/t/p/w1280",
+      trailerData: new TrailerResponse()
     };
 
   },
@@ -22,6 +24,15 @@ export default {
         .pipe()
         .subscribe({ next: (response) => (this.data = response) });
       this.detailService.getDataById(this.id, this.mediaType);
+    },
+    getTrailerVideo(media: TvShow) {
+      this.detailService.trailer.pipe().subscribe({
+        next: (response) => this.trailerData = response 
+      })
+
+      if(media.id) {
+        this.detailService.getTrailerById(media.id, this.checkMediaType(media))
+      } 
     },
     addFavorite(favorite: TvShow) {
       const localStorageUtil = new LocalStorage<Array<TvShow>>();
@@ -40,7 +51,7 @@ export default {
       }
 
       return "movie"
-    }
+    }, 
   },
   computed: {
     detailService() {
@@ -64,9 +75,17 @@ export default {
         return "https://www.youtube.com/results?search_query=" + urlVideo;
       }
     },
+    trailerUrl() {
+      if(this.trailerData !== undefined && this.trailerData.results !== undefined) {
+        const videoKey = this.trailerData.results[0].key
+        https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&mute=0
+
+        return "https://www.youtube.com/embed/" + videoKey
+      }
+    }
   },
   mounted() {
-    this.getDataById();
+    this.getDataById()
   },
 };
 </script>
@@ -113,14 +132,13 @@ export default {
         </template>
         <template #footer>
           <div class="flex gap-4">
-            <a :href="urlVideo" target="_blank">
-              <Button
-                label="Trailer"
-                icon="pi pi-play"
-                severity="primary"
-                class="text-white bg-red-600 border-none hover:scale-105 transition-all"
-              />
-            </a>
+            <Button
+              label="Trailer"
+              icon="pi pi-play"
+              severity="primary"
+              class="text-white bg-red-600 border-none hover:scale-105 transition-all"
+              @click="getTrailerVideo(data)"
+            />
             <Button
               label="Salvar"
               icon="pi pi-heart"
@@ -131,6 +149,8 @@ export default {
           </div>
         </template>
       </Card>
+      <iframe :src="trailerUrl" frameborder="0" width="600" height="400" class="absolute top-5 right-5 rounded" v-if="trailerData" />
+      <div v-else>Video</div>
     </div>
   </section>
 </template>

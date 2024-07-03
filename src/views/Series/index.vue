@@ -1,5 +1,5 @@
 <template>
-  <DataView :value="tvShows.results" :rows="tvShows.results?.length" 
+  <DataView :value="tvShows.results" :rows="tvShows.results?.length"  class="pt-16"
     :first="getFirstItemIndexActualPage()" :totalRecords="getTotalRecords()" @page="onPageChange"
     responsive-layout="scroll" :lazy="true">
     <template #list="tvShows">

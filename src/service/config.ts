@@ -7,7 +7,9 @@ function apiConfig(baseUrl: string, token?: string): AxiosRequestConfig {
     headers: {}
   }
 
-  config.headers!.Authorization = token ? `Bearer ${token}` : `Bearer ${import.meta.env.VITE_BEARER_TOKEN}`;
+  if(token !== "") {
+    config.headers!.Authorization = token ? `Bearer ${token}` : `Bearer ${import.meta.env.VITE_BEARER_TOKEN}`;
+  }
 
 
   return config
@@ -34,7 +36,7 @@ function initAxios(config: AxiosRequestConfig): AxiosInstance {
   return defineInstance;
 }
 
-function api(baseURL = "/api", token?: string) {
+function api(baseURL: string, token?: string) {
   return initAxios(apiConfig(baseURL, token));
 }
 
