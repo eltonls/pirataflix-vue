@@ -26,16 +26,6 @@
       </div>
 
       <div v-else class="bg-greybackground h-screen text-white "> <h1 class="flex text-9xl font-bold pt-60"> . . .</h1></div> 
-
-      <Paginator v-if="data"
-        :rows="dataPerPage"
-        :value="data"
-        :totalRecords="getTotalRecords()"
-        @page="onPaginate"
-        :first="getFirstItemIndex()"
-        class="mt-16 text-white"
-      />
-
       <Paginator
         :rows="dataPerPage"
         :value="data"

@@ -61,6 +61,13 @@ export default {
       return new DetailService();
     },
 
+    isTrailerOn() {
+      if(this.trailerData.id !== undefined) {
+        return true
+      } 
+
+      return false
+    },
 
     backgroundImage() {
       return this.prefixUrlImage + this.data.backdrop_path;
@@ -135,16 +142,13 @@ export default {
         </template>
         <template #footer>
           <div class="flex gap-4">
-
-            <a :href="urlVideo" target="_blank">
-              <Button
-        
+              <Button 
                 label="Trailer"
                 icon="pi pi-play"
                 severity="primary"
                 class="text-white bg-red-600 border-none hover:scale-105 transition-all"
+                @click="getTrailerVideo(data)"
               />
-            </a>
             <Button
             
               label="Salvar"
@@ -156,12 +160,15 @@ export default {
           </div>
         </template>
       </Card>
-      <iframe :src="trailerUrl" frameborder="0" width="600" height="400" class="absolute top-5 right-5 rounded" v-if="trailerData" />
-      <div v-else>Video</div>
-
+      
       <Toast position="top-center" class="z-50" />
 
     </div>
+
+      <iframe :src="trailerUrl" frameborder="0" width="600" height="400" class="absolute top-[50%] right-5 rounded translate-y-[-50%]" v-if="isTrailerOn" />
+      <div v-else class="w-[600px] h-[400px] max-w-[600] max-h-[400] absolute top-[50%] right-5 rounded translate-y-[-50%]">
+        <img :src="'https://image.tmdb.org/t/p/w500' + data.poster_path" class="object-cover w-full h-full" />
+      </div>
   </section>
 
 </template>
