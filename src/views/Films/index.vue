@@ -1,7 +1,8 @@
 <template>
+    <Toast position="top-center" class="z-50" />
   <div class="bg-greybackground pt-20">
     <div class="flex flex-col items-center justify-center p-5 md:p-12">
-      <div class="grid md:grid-cols-4 md:gap-8 gap-4 grid-cols-2">
+      <div v-if="movies" class="grid md:grid-cols-4 md:gap-8 gap-4 grid-cols-2">
         <Card v-for="card in movies" :key="card.id" unstyled>
           <template #content>
             <RouterLink :to="`/movie/${card.id}`">
@@ -9,11 +10,11 @@
                 v-if="card"
                 :src="'https://image.tmdb.org/t/p/w500' + card.poster_path"
                 alt="Imagem"
-                class="h-[20vw] h-fit hover:opacity-50 hover:bg-[#303153] rounded-lg hover:p-4 ease-in-out duration-300 shadow-lg cursor-pointer"
+                class=" h-fit hover:opacity-50 hover:bg-[#303153] rounded-lg hover:p-4 ease-in-out duration-300 shadow-lg cursor-pointer"
               />
               <div
                 v-else
-                class="h-[20vw] flex text-white font-bold items-center hover:opacity-50 hover:bg-[#303153] rounded-lg"
+                class=" h-full flex text-white font-bold items-center hover:opacity-50 hover:bg-[#303153] rounded-lg"
               >
                 Imagem não encontrada
               </div>
@@ -21,7 +22,9 @@
           </template>
         </Card>
       </div>
+      <div v-else class="bg-greybackground h-screen text-white "> <h1 class="flex text-9xl font-bold pt-60"> . . .</h1></div> 
       <Paginator
+       v-if="movies"
         :rows="dataPerPage"
         :totalRecords="getTotalRecords()"
         @page="onPaginate"

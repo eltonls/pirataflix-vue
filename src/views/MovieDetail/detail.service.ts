@@ -20,8 +20,6 @@ export class DetailService{
         next:(response)=>{
           this.dataById$.next(response as TvShow)
 
-
-
         }
       })
     }
