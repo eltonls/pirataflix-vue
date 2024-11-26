@@ -10,7 +10,7 @@ function apiConfig(baseUrl: string, token?: string): AxiosRequestConfig {
   }
 
   if(token !== "") {
-    config.headers!.Authorization = token ? `Bearer ${token}` : `Bearer ${import.meta.env.VITE_BEARER_TOKEN}`;
+    config.headers!.Authorization = token ? `Bearer ${token}` : `Bearer ${process.env.VITE_BEARER_TOKEN}`;
   }
 
 
